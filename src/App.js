@@ -1,13 +1,10 @@
 import React from 'react';
-import './App.css';
-import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
+import Routes from './Routes';
 
 function App() {
-  console.log(getProductsFromCategoryAndQuery('Agro'));
-  console.log(getCategories());
   return (
-    <div className="App">
-      INÍCIO
+    <div>
+      <Routes />
     </div>
   );
 }
