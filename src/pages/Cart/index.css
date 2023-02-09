@@ -1,0 +1,22 @@
+.cart-products {
+  height: 664px;
+  margin-right: 36px;
+  overflow: auto;
+  padding: 15px 110px;
+  width: 516px;
+}
+
+.cart-buy {
+  height: 100%;
+  margin: auto;
+  padding: 150px;
+  width: 614px;
+}
+
+.container {
+  height: 100%;
+}
+
+.cart-products--desc {
+  margin-bottom: 45px;
+}

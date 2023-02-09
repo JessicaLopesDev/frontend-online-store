@@ -1,0 +1,14 @@
+header {
+  padding: 60px 40px;
+}
+
+header input {
+  max-height: 35px;
+  outline: transparent;
+  padding: 11px 0;
+  padding-right: 41px;
+}
+
+header input::placeholder {
+  padding-left: 8px;
+}
