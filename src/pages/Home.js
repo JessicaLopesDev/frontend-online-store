@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 export default class Home extends Component {
   state = {
@@ -9,6 +10,7 @@ export default class Home extends Component {
     const { list } = this.state;
     return (
       <div>
+        <Header />
         { list.length === 0
         && (
           <h3 data-testid="home-initial-message">
