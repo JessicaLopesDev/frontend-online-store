@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Categories from '../components/Categories/Categories';
 import Header from '../components/Header/Header';
+import Categories from '../components/Categories/Categories';
 
 export default class Home extends Component {
   state = {
@@ -12,18 +12,15 @@ export default class Home extends Component {
     return (
       <div>
         <Header />
-        <main className="flex">
-          <Categories />
-          { list.length < 1 ? (
-            <p data-testid="home-initial-message" className="text-xl">
+        <Categories />
+        { !list.length
+          ? (
+            <h3 data-testid="home-initial-message">
               Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>
+            </h3>
           ) : (
-            <div className="flex gap-18">
-              <div>teste</div>
-            </div>
+            <div>teste</div>
           )}
-        </main>
       </div>
     );
   }
