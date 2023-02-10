@@ -13,7 +13,6 @@ export default class Categories extends Component {
   }
 
   handleGetCategories = () => {
-    console.log('iniciar requisito');
     api.getCategories().then((categories) => {
       const categoryNames = categories.map((item) => item.name);
       this.setState({
