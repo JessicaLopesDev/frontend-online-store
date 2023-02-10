@@ -7,10 +7,10 @@ export default class Products extends Component {
       <div className="flex justify-between cart-products--item">
         <span>X</span>
         <span>imagem</span>
-        <span>Nome do produto</span>
+        <span data-testid="shopping-cart-product-name">Nome do produto</span>
         <div>
           <span>-</span>
-          <span>1</span>
+          <span data-testid="shopping-cart-product-quantity">1</span>
           <span>+</span>
         </div>
         <div>R$ 2500,00</div>

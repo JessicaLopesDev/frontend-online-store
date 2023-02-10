@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header/Header';
@@ -11,8 +12,16 @@ export default class Home extends Component {
     done: false,
   };
 
-  handleClick = async (search) => {
+  handleInput = async (search) => {
     const products = await getProductsFromCategoryAndQuery(search);
+    this.setState({
+      list: products.results,
+      done: true,
+    });
+  };
+
+  handleCategorie = async (id) => {
+    const products = await getProductsFromCategoryAndQuery(null, id);
     this.setState({
       list: products.results,
       done: true,
@@ -27,11 +36,14 @@ export default class Home extends Component {
 
   render() {
     const { list, done } = this.state;
+    const { addToCart } = this.props;
     return (
       <div>
-        <Header handleClick={ this.handleClick } />
+        <Header
+          handleInput={ this.handleInput }
+        />
         <main className="flex">
-          <Categories handleClick={ this.handleClick } />
+          <Categories handleCategorie={ this.handleCategorie } />
           { list.length < 1 && !done
             ? (
               <h3 data-testid="home-initial-message">
@@ -45,9 +57,13 @@ export default class Home extends Component {
                   <div>
                     { list.map((product) => (
                       <ProductCard
+                       
                         product={ product }
+                       
                         key={ product.id }
                         onClickProduct={ () => this.handleClickProduct(product.id) }
+                     
+                        addToCart={ addToCart }
                       />
                     ))}
                   </div>
@@ -59,6 +75,10 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  addToCart: PropTypes.func,
+}.isRequired;
 
 Home.propTypes = {
   history: PropTypes.shape({

@@ -14,7 +14,7 @@ export default class Header extends Component {
   };
 
   render() {
-    const { handleClick } = this.props;
+    const { handleInput } = this.props;
     const { search } = this.state;
     return (
       <header className="flex items-center justify-between bg-blue text-white">
@@ -30,7 +30,7 @@ export default class Header extends Component {
         <button
           type="button"
           data-testid="query-button"
-          onClick={ () => handleClick(search) }
+          onClick={ () => handleInput(search) }
         >
           Buscar
         </button>
@@ -50,5 +50,5 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  handleClick: PropTypes.func,
+  handleInput: PropTypes.func,
 }.isRequired;

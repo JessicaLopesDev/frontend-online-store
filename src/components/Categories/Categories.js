@@ -14,30 +14,29 @@ export default class Categories extends Component {
 
   handleGetCategories = () => {
     api.getCategories().then((categories) => {
-      const categoryNames = categories.map((item) => item.name);
       this.setState({
-        categoriesList: categoryNames });
+        categoriesList: categories });
     });
   };
 
   render() {
     const { categoriesList } = this.state;
-    const { handleClick } = this.props;
+    const { handleCategorie } = this.props;
     return (
       <aside className="categories bg-white">
         {categoriesList.map((category) => (
           <label
             data-testid="category"
-            htmlFor={ category }
-            key={ category }
+            htmlFor={ category.id }
+            key={ category.id }
           >
             <input
-              id={ category }
+              id={ category.id }
               name="category"
               type="radio"
-              onClick={ () => handleClick(category) }
+              onClick={ () => handleCategorie(category.id) }
             />
-            { category }
+            { category.name }
           </label>
         ))}
       </aside>
@@ -46,5 +45,5 @@ export default class Categories extends Component {
 }
 
 Categories.propTypes = {
-  handleClick: PropTypes.func,
+  handleCategorie: PropTypes.func,
 }.isRequired;
