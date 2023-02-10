@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header/Header';
@@ -16,6 +18,12 @@ export default class Home extends Component {
       list: products.results,
       done: true,
     });
+  };
+
+  handleClickProduct = (productId) => {
+    const { history } = this.props;
+
+    history.push(`/product-details/${productId}`);
   };
 
   render() {
@@ -37,7 +45,11 @@ export default class Home extends Component {
                 ) : (
                   <div>
                     { list.map((product) => (
-                      <ProductCard product={ product } key={ product.id } />
+                      <ProductCard
+                        product={ product }
+                        key={ product.id }
+                        onClickProduct={ () => this.handleClickProduct(product.id) }
+                      />
                     ))}
                   </div>
                 )}
@@ -52,3 +64,9 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
