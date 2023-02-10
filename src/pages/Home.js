@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header/Header';
@@ -20,6 +21,7 @@ export default class Home extends Component {
 
   render() {
     const { list, done } = this.state;
+    const { addToCart } = this.props;
     return (
       <div>
         <Header handleClick={ this.handleClick } />
@@ -37,18 +39,22 @@ export default class Home extends Component {
                 ) : (
                   <div>
                     { list.map((product) => (
-                      <ProductCard product={ product } key={ product.id } />
+                      <ProductCard
+                        product={ product }
+                        key={ product.id }
+                        addToCart={ addToCart }
+                      />
                     ))}
                   </div>
                 )}
               </div>
             )}
         </main>
-        {/* { list.length === 0 && done === true && <h3>Nenhum produto foi encontrado</h3> } */}
-        {/* { list.map((product) => (
-          <ProductCard product={ product } key={ product.id } />
-        ))} */}
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  addToCart: PropTypes.func,
+}.isRequired;
