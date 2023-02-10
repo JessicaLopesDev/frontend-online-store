@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './index.css';
+import PropTypes from 'prop-types';
 import * as api from '../../services/api';
 
 export default class Categories extends Component {
@@ -21,6 +22,7 @@ export default class Categories extends Component {
 
   render() {
     const { categoriesList } = this.state;
+    const { handleClick } = this.props;
     return (
       <aside className="categories bg-white">
         {categoriesList.map((category) => (
@@ -33,6 +35,7 @@ export default class Categories extends Component {
               id={ category }
               name="category"
               type="radio"
+              onClick={ () => handleClick(category) }
             />
             { category }
           </label>
@@ -41,3 +44,7 @@ export default class Categories extends Component {
     );
   }
 }
+
+Categories.propTypes = {
+  handleClick: PropTypes.func,
+}.isRequired;

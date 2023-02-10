@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header/Header';
 import Categories from '../components/Categories/Categories';
@@ -19,13 +19,12 @@ export default class Home extends Component {
   };
 
   render() {
-    console.log(getCategories());
     const { list, done } = this.state;
     return (
       <div>
         <Header handleClick={ this.handleClick } />
         <main className="flex">
-          <Categories />
+          <Categories handleClick={ this.handleClick } />
           { list.length < 1 && !done
             ? (
               <h3 data-testid="home-initial-message">
