@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 
 class ProductCard extends React.Component {
   render() {
-    const { product } = this.props;
+    const { product, onClickProduct } = this.props;
     return (
-      <div data-testid="product">
-        <h3>{ product.title }</h3>
+      <button
+        data-testid="product"
+        onClick={ onClickProduct }
+      >
+        <h3 data-testid="product-detail-link">
+          { product.title }
+        </h3>
         <img src={ product.thumbnail } alt={ product.title } />
         <h4>{ product.price }</h4>
-      </div>
+      </button>
     );
   }
 }
@@ -22,4 +27,5 @@ ProductCard.propTypes = {
     price: PropTypes.number.isRequired,
     thumbnail: PropTypes.string.isRequired,
   }).isRequired,
+  onClickProduct: PropTypes.func.isRequired,
 };
