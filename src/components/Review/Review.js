@@ -7,15 +7,15 @@ export default class Review extends Component {
   render() {
     const { review } = this.props;
     return (
-      <>
+      <div>
         <div className="flex gap-18">
-          <div className="font-bold">{review.email}</div>
-          <div><Star rating={ review.rating } disabled /></div>
+          <div className="font-bold" data-testid="review-card-email">{review.email}</div>
+          <div><Star rating={ review.rating } disabled review /></div>
         </div>
-        <div>
-          {review.message}
+        <div data-testid="review-card-evaluation">
+          {review.text}
         </div>
-      </>
+      </div>
     );
   }
 }

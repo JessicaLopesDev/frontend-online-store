@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Review from '../Review/Review';
-import './index.css';
 import Star from './Star/Star';
 
 export default class Form extends Component {
   state = {
     rating: 0,
     email: '',
-    message: '',
+    text: '',
     error: false,
     reviews: [],
   };
 
   componentDidMount() {
-    const local = localStorage.reviews;
+    const { productId } = this.props;
+    const local = localStorage[productId];
     if (local) {
       const reviews = JSON.parse(local);
       this.setState({ reviews });
@@ -21,16 +22,18 @@ export default class Form extends Component {
   }
 
   addLocalStorage = () => {
+    this.setState({ rating: 0, email: '', text: '', error: false });
+    const { productId } = this.props;
     const { reviews } = this.state;
-    localStorage.reviews = JSON.stringify(reviews);
+    localStorage[productId] = JSON.stringify(reviews);
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { rating, email, message, reviews } = this.state;
-    if (rating !== 0 && email && message) {
+    const { rating, email, text, reviews } = this.state;
+    if (rating !== 0 && email) {
       this.setState({
-        reviews: [...reviews, { rating, email, message }],
+        reviews: [...reviews, { rating, email, text }],
       }, this.addLocalStorage);
     } else {
       this.setState({ error: true });
@@ -47,7 +50,7 @@ export default class Form extends Component {
   };
 
   render() {
-    const { rating, email, message, error, reviews } = this.state;
+    const { rating, email, text, error, reviews } = this.state;
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
@@ -60,11 +63,14 @@ export default class Form extends Component {
               value={ email }
               onChange={ this.handleChange }
             />
-            <div>
-              <Star rating={ rating } handleRating={ this.handleRating } />
-            </div>
+            <Star rating={ rating } handleRating={ this.handleRating } />
           </div>
-          <textarea name="message" value={ message } onChange={ this.handleChange } />
+          <textarea
+            data-testid="product-detail-evaluation"
+            name="text"
+            value={ text }
+            onChange={ this.handleChange }
+          />
           <button data-testid="submit-review-btn">Avaliar</button>
           {error && <p data-testid="error-msg">Campos inválidos</p>}
         </form>
@@ -74,3 +80,7 @@ export default class Form extends Component {
     );
   }
 }
+
+Form.propTypes = {
+  productId: PropTypes.string,
+}.isRequired;

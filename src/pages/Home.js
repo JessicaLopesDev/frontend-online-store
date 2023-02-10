@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header/Header';
 import Categories from '../components/Categories/Categories';
-import Form from '../components/Form/Form';
 
 export default class Home extends Component {
   state = {
@@ -57,11 +55,6 @@ export default class Home extends Component {
               </div>
             )}
         </main>
-        <Form />
-        {/* { list.length === 0 && done === true && <h3>Nenhum produto foi encontrado</h3> } */}
-        {/* { list.map((product) => (
-          <ProductCard product={ product } key={ product.id } />
-        ))} */}
       </div>
     );
   }
