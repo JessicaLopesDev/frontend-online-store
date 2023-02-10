@@ -1,16 +1,39 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
+import PropTypes from 'prop-types';
 
 export default class Header extends Component {
+  state = {
+    search: '',
+  };
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  };
+
   render() {
+    const { handleClick } = this.props;
+    const { search } = this.state;
     return (
       <header className="flex items-center justify-between bg-blue text-white">
         <input
+          data-testid="query-input"
+          name="search"
           type="text"
           className="header-search"
           placeholder="Digite o que você busca"
+          value={ search }
+          onChange={ this.handleChange }
         />
+        <button
+          type="button"
+          data-testid="query-button"
+          onClick={ () => handleClick(search) }
+        >
+          Buscar
+        </button>
         <div className="flex items-center gap-4">
           <div><img src="./assets/images/logo.png" alt="logomarca" /></div>
           <div className="text-center">
@@ -25,3 +48,7 @@ export default class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  handleClick: PropTypes.func,
+}.isRequired;

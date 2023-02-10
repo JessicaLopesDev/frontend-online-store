@@ -23,14 +23,14 @@ export default class Categories extends Component {
     const { categoriesList } = this.state;
     return (
       <aside className="categories bg-white">
-        {categoriesList.map((category, index) => (
+        {categoriesList.map((category) => (
           <label
             data-testid="category"
-            htmlFor="category-input"
-            key={ index }
+            htmlFor={ category }
+            key={ category }
           >
             <input
-              id="category-input"
+              id={ category }
               name="category"
               type="radio"
             />
