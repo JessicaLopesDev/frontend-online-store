@@ -11,8 +11,16 @@ export default class Home extends Component {
     done: false,
   };
 
-  handleClick = async (search) => {
+  handleInput = async (search) => {
     const products = await getProductsFromCategoryAndQuery(search);
+    this.setState({
+      list: products.results,
+      done: true,
+    });
+  };
+
+  handleCategorie = async (id) => {
+    const products = await getProductsFromCategoryAndQuery(null, id);
     this.setState({
       list: products.results,
       done: true,
@@ -24,9 +32,11 @@ export default class Home extends Component {
     const { addToCart } = this.props;
     return (
       <div>
-        <Header handleClick={ this.handleClick } />
+        <Header
+          handleInput={ this.handleInput }
+        />
         <main className="flex">
-          <Categories handleClick={ this.handleClick } />
+          <Categories handleCategorie={ this.handleCategorie } />
           { list.length < 1 && !done
             ? (
               <h3 data-testid="home-initial-message">

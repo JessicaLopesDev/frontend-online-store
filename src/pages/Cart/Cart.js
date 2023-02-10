@@ -6,6 +6,10 @@ import './index.css';
 export default class Cart extends Component {
   render() {
     const { cart } = this.props;
+    let totalPrice = 0;
+    cart.forEach((product) => {
+      totalPrice += product.price;
+    });
     return (
       <>
         <Header />
@@ -53,7 +57,10 @@ export default class Cart extends Component {
                 className="bg-white cart-buy flex flex-col justify-center items-center"
               >
                 <div className="font-bold text-xl">Valor total da compra</div>
-                <div className="font-bold">R$ 1000</div>
+                <div className="font-bold">
+                  R$
+                  {totalPrice}
+                </div>
                 <button className="bg-green">Finalizar compra</button>
               </div>
             </div>
