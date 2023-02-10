@@ -11,3 +11,83 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body {
+  background-color: #F5F5F5;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.text-xl {
+  font-size: 24px;
+}
+
+.font-bold {
+  font-weight: 800;
+}
+
+.bg-blue {
+  background-color: #003BE5;
+}
+
+.bg-green {
+  background-color: #31C28D;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.text-blue {
+  color: #003BE5;
+}
+
+.text-green {
+  color: #31C28D;
+}
+
+.text-white {
+  color: white;
+}
+
+.gap-2 {
+  gap: 2px;
+}
+
+.gap-3 {
+  gap: 3px;
+}
+
+.gap-4 {
+  gap: 4px;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-14 {
+  gap: 14px;
+}
+
+.gap-18 {
+  gap: 18px;
+}
+
+.text-center {
+  text-align: center;
+}
