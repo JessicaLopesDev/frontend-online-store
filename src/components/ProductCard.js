@@ -6,15 +6,14 @@ class ProductCard extends React.Component {
     const { addToCart } = this.props;
     const { product, onClickProduct } = this.props;
     return (
-      <button
-        data-testid="product"
-        onClick={ onClickProduct }
-      >
-        <h3 data-testid="product-detail-link">
-          { product.title }
-        </h3>
-        <img src={ product.thumbnail } alt={ product.title } />
-        <h4>{ product.price }</h4>
+      <div>
+        <button data-testid="product" onClick={ onClickProduct }>
+          <h3 data-testid="product-detail-link">
+            { product.title }
+          </h3>
+          <img src={ product.thumbnail } alt={ product.title } />
+          <h4>{ product.price }</h4>
+        </button>
         <button
           type="button"
           onClick={ () => addToCart(product) }
