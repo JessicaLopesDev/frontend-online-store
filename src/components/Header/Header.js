@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './index.css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { getProductsFromCategoryAndQuery } from '../../services/api';
+import './index.css';
 
 export default class Header extends Component {
   state = {
@@ -52,3 +53,9 @@ export default class Header extends Component {
 Header.propTypes = {
   handleInput: PropTypes.func,
 }.isRequired;
+
+Header.defaultProps = {
+  handleInput: () => {
+    getProductsFromCategoryAndQuery(search).then(() => {});
+  },
+};

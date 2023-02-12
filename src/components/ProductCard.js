@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class ProductCard extends React.Component {
   render() {
-    const { addToCart } = this.props;
-    const { product, onClickProduct } = this.props;
+    const { addToCart, product } = this.props;
     return (
-      <div>
-        <button data-testid="product" onClick={ onClickProduct }>
-          <h3 data-testid="product-detail-link">
+      <div data-testid="product">
+        <Link
+          data-testid="product-detail-link"
+          to={ `/product-details/${product.id}` }
+        >
+          <h3>
             { product.title }
           </h3>
           <img src={ product.thumbnail } alt={ product.title } />
           <h4>{ product.price }</h4>
-        </button>
+        </Link>
         <button
           type="button"
           onClick={ () => addToCart(product) }
@@ -29,11 +32,11 @@ class ProductCard extends React.Component {
 export default ProductCard;
 
 ProductCard.propTypes = {
+  addToCart: PropTypes.func.isRequired,
   product: PropTypes.shape({
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     thumbnail: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
-  addToCart: PropTypes.func.isRequired,
-  onClickProduct: PropTypes.func.isRequired,
 };

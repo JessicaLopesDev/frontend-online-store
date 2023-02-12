@@ -27,12 +27,6 @@ export default class Home extends Component {
     });
   };
 
-  handleClickProduct = (productId) => {
-    const { history } = this.props;
-
-    history.push(`/product-details/${productId}`);
-  };
-
   render() {
     const { list, done } = this.state;
     const { addToCart } = this.props;
@@ -56,12 +50,8 @@ export default class Home extends Component {
                   <div>
                     { list.map((product) => (
                       <ProductCard
-                       
                         product={ product }
-                       
                         key={ product.id }
-                        onClickProduct={ () => this.handleClickProduct(product.id) }
-                     
                         addToCart={ addToCart }
                       />
                     ))}
@@ -76,11 +66,5 @@ export default class Home extends Component {
 }
 
 Home.propTypes = {
-  addToCart: PropTypes.func,
-}.isRequired;
-
-Home.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
