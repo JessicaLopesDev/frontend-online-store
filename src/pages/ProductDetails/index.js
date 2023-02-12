@@ -15,14 +15,17 @@ export default class ProductDetails extends Component {
   }
 
   handleGetProduct = async () => {
-    const { match } = this.props;
+    const productId = localStorage.getItem('@product-id');
 
-    const product = await getProductDetails(match.params.id);
-    this.setState({ product });
+    if (productId) {
+      const product = await getProductDetails(productId);
+      this.setState({ product });
+    }
   };
 
   render() {
     const { product } = this.state;
+    const { addToCart } = this.props;
 
     return (
       <div>
@@ -56,6 +59,13 @@ export default class ProductDetails extends Component {
                   <h3 data-testid="product-detail-price">
                     {`R$ ${product.price}`}
                   </h3>
+                  <button
+                    type="button"
+                    onClick={ () => addToCart(product) }
+                    data-testid="product-detail-add-to-cart"
+                  >
+                    Adicionar ao carrinho
+                  </button>
                 </section>
               </div>
               <Form productId={ product.id } />
@@ -68,9 +78,18 @@ export default class ProductDetails extends Component {
 }
 
 ProductDetails.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
+  // match: PropTypes.shape({
+  //   params: PropTypes.shape({
+  //     id: PropTypes.string,
+  //   }),
+  // }).isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
+
+// ProductDetails.defaultProps = {
+//   match: PropTypes.shape({
+//     params: PropTypes.shape({
+//       id: '',
+//     }),
+//   }),
+// };

@@ -9,8 +9,19 @@ export default class Routes extends Component {
     cart: [],
   };
 
+  saveProductsLocalStorage = (product) => {
+    const products = JSON.parse(localStorage.getItem('@products'));
+
+    if (products) {
+      localStorage.setItem('@products', JSON.stringify([...products, product]));
+    } else {
+      localStorage.setItem('@products', JSON.stringify([product]));
+    }
+  };
+
   addToCart = (product) => {
-    console.log(product);
+    this.saveProductsLocalStorage(product);
+
     const { cart } = this.state;
     if (cart.includes(product)) {
       const newProduct = cart.find((oldProduct) => oldProduct === product);
@@ -29,7 +40,10 @@ export default class Routes extends Component {
       <Switch>
         <Route exact path="/" render={ () => <Home addToCart={ this.addToCart } /> } />
         <Route path="/cart" render={ () => <Cart cart={ cart } /> } />
-        <Route path="/product-details/:id" component={ ProductDetails } />
+        <Route
+          path="/product-details/:id"
+          render={ () => <ProductDetails addToCart={ this.addToCart } /> }
+        />
       </Switch>
     );
   }

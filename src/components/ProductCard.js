@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class ProductCard extends React.Component {
+  handleSaveProductId = (productId) => {
+    localStorage.setItem('@product-id', productId);
+  };
+
   render() {
     const { addToCart, product } = this.props;
     return (
@@ -10,6 +14,7 @@ class ProductCard extends React.Component {
         <Link
           data-testid="product-detail-link"
           to={ `/product-details/${product.id}` }
+          onClick={ () => this.handleSaveProductId(product.id) }
         >
           <h3>
             { product.title }
