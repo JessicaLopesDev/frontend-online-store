@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './index.css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { getProductsFromCategoryAndQuery } from '../../services/api';
+import './index.css';
 
 export default class Header extends Component {
   state = {
@@ -14,7 +15,7 @@ export default class Header extends Component {
   };
 
   render() {
-    const { handleClick } = this.props;
+    const { handleInput } = this.props;
     const { search } = this.state;
     return (
       <header className="flex items-center justify-between bg-blue text-white">
@@ -30,7 +31,7 @@ export default class Header extends Component {
         <button
           type="button"
           data-testid="query-button"
-          onClick={ () => handleClick(search) }
+          onClick={ () => handleInput(search) }
         >
           Buscar
         </button>
@@ -50,5 +51,11 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  handleClick: PropTypes.func,
+  handleInput: PropTypes.func,
 }.isRequired;
+
+Header.defaultProps = {
+  handleInput: () => {
+    getProductsFromCategoryAndQuery(search).then(() => {});
+  },
+};

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../../components/Header/Header';
 import './index.css';
-import Products from './Products/Products';
 
 export default class Cart extends Component {
-  state = {
-    cart: [],
-  };
-
   render() {
-    const { cart } = this.state;
+    const { cart } = this.props;
+    let totalPrice = 0;
+    cart.forEach((product) => {
+      totalPrice += product.price;
+    });
     return (
       <>
         <Header />
@@ -28,13 +28,39 @@ export default class Cart extends Component {
                 >
                   Carrinho de Compras
                 </div>
-                <Products />
+                {cart.map((product) => (
+                  <div
+                    className="flex justify-between cart-products--item"
+                    key={ product.id }
+                  >
+                    <span>X</span>
+                    <img src={ product.thumbnail } alt={ product.title } />
+                    <p data-testid="shopping-cart-product-name">{product.title}</p>
+                    <div>
+                      <span>-</span>
+                      <span
+                        data-testid="shopping-cart-product-quantity"
+                      >
+                        {product.quantity}
+                      </span>
+                      <span>+</span>
+                    </div>
+                    <div>
+                      R$
+                      {product.price}
+                    </div>
+                  </div>
+                ))}
+
               </div>
               <div
                 className="bg-white cart-buy flex flex-col justify-center items-center"
               >
                 <div className="font-bold text-xl">Valor total da compra</div>
-                <div className="font-bold">R$ 1000</div>
+                <div className="font-bold">
+                  R$
+                  {totalPrice}
+                </div>
                 <button className="bg-green">Finalizar compra</button>
               </div>
             </div>
@@ -44,3 +70,7 @@ export default class Cart extends Component {
     );
   }
 }
+
+Cart.propTypes = {
+  cart: PropTypes.array,
+}.isRequired;
