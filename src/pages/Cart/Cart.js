@@ -2,14 +2,33 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../components/Header/Header';
 import './index.css';
+import CartItem from '../../components/CartItem';
 
 export default class Cart extends Component {
-  render() {
+  state = {
+    totalPrice: 0,
+  };
+
+  componentDidMount() {
+    console.log('didMount');
+    this.handleChange();
+  }
+
+  handleChange() {
+    let price = 0;
     const { cart } = this.props;
-    let totalPrice = 0;
-    cart.forEach((product) => {
-      totalPrice += product.price;
-    });
+    if (cart) {
+      cart.forEach((product) => {
+        price += (Number(product.price) * Number(product.quantity));
+      });
+      this.setState({ totalPrice: price });
+    }
+  }
+
+  render() {
+    const { cart, removeItem } = this.props;
+    const { totalPrice } = this.state;
+
     return (
       <>
         <Header />
@@ -18,7 +37,7 @@ export default class Cart extends Component {
             <img src="./assets/images/back.png" alt="icone de voltar" />
             <div>Voltar</div>
           </div>
-          { cart.length < 1 ? (
+          { cart && cart.length < 1 ? (
             <div data-testid="shopping-cart-empty-message">Seu carrinho está vazio</div>
           ) : (
             <div className="flex container">
@@ -28,30 +47,18 @@ export default class Cart extends Component {
                 >
                   Carrinho de Compras
                 </div>
-                {cart.map((product) => (
+                { cart && cart.map((product) => (
                   <div
                     className="flex justify-between cart-products--item"
                     key={ product.id }
                   >
-                    <span>X</span>
-                    <img src={ product.thumbnail } alt={ product.title } />
-                    <p data-testid="shopping-cart-product-name">{product.title}</p>
-                    <div>
-                      <span>-</span>
-                      <span
-                        data-testid="shopping-cart-product-quantity"
-                      >
-                        {product.quantity}
-                      </span>
-                      <span>+</span>
-                    </div>
-                    <div>
-                      R$
-                      {product.price}
-                    </div>
+                    <CartItem
+                      product={ product }
+                      handleChange={ this.handleChange }
+                      removeItem={ removeItem }
+                    />
                   </div>
                 ))}
-
               </div>
               <div
                 className="bg-white cart-buy flex flex-col justify-center items-center"

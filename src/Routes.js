@@ -9,29 +9,42 @@ export default class Routes extends Component {
     cart: [],
   };
 
-  saveProductsLocalStorage = (product) => {
-    const products = JSON.parse(localStorage.getItem('@products'));
+  componentDidMount() {
+    const local = localStorage.getItem('@products');
+    if (local) {
+      this.setState({ cart: JSON.parse(local) });
+    }
+  }
 
-    if (products) {
-      localStorage.setItem('@products', JSON.stringify([...products, product]));
+  addToCart = (newProduct, quantity = 1) => {
+    const { cart } = this.state;
+    const productInCart = cart.some((product) => product.id === newProduct.id);
+    if (productInCart) {
+      const oldProduct = cart.find((product) => product.id === newProduct.id);
+      oldProduct.quantity += Number(quantity);
+      const newList = cart.filter((product) => product !== oldProduct);
+      this.setState({ cart: [...newList, oldProduct] }, this.addLocalStorage);
     } else {
-      localStorage.setItem('@products', JSON.stringify([product]));
+      newProduct.quantity = quantity;
+      this.setState({ cart: [...cart, newProduct] }, this.addLocalStorage);
     }
   };
 
-  addToCart = (product) => {
-    this.saveProductsLocalStorage(product);
-
+  addLocalStorage = () => {
     const { cart } = this.state;
-    if (cart.includes(product)) {
-      const newProduct = cart.find((oldProduct) => oldProduct === product);
-      newProduct.quantity += 1;
-      const newList = cart.filter((oldProduct) => oldProduct !== product);
-      this.setState({ cart: [...newList, newProduct] });
-    } else {
-      product.quantity = 1;
-      this.setState({ cart: [...cart, product] });
-    }
+    localStorage.setItem('@products', JSON.stringify(cart));
+  };
+
+  removeItem = (oldProduct) => {
+    const { cart } = this.state;
+    const newList = cart.filter((product) => product.id !== oldProduct.id);
+
+    this.setState({ cart: [...newList] }, this.removeLocalStorage);
+  };
+
+  removeLocalStorage = () => {
+    const { cart } = this.state;
+    localStorage.setItem('@products', JSON.stringify(cart));
   };
 
   render() {
@@ -39,7 +52,10 @@ export default class Routes extends Component {
     return (
       <Switch>
         <Route exact path="/" render={ () => <Home addToCart={ this.addToCart } /> } />
-        <Route path="/cart" render={ () => <Cart cart={ cart } /> } />
+        <Route
+          path="/cart"
+          render={ () => <Cart cart={ cart } removeItem={ this.removeItem } /> }
+        />
         <Route
           path="/product-details/:id"
           render={ () => <ProductDetails addToCart={ this.addToCart } /> }
