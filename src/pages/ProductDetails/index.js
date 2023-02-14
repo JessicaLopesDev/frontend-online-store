@@ -8,6 +8,7 @@ import Form from '../../components/Form/Form';
 export default class ProductDetails extends Component {
   state = {
     product: null,
+    quantity: 1,
   };
 
   componentDidMount() {
@@ -23,8 +24,29 @@ export default class ProductDetails extends Component {
     }
   };
 
+  addQuantity = () => {
+    console.log('mais');
+    const { product, quantity } = this.state;
+    if (quantity < product.available_quantity) {
+      this.setState({ quantity: quantity + 1 }, this.ver);
+    }
+  };
+
+  subQuantity = () => {
+    console.log('menos');
+    const { quantity } = this.state;
+    if (quantity > 1) {
+      this.setState({ quantity: quantity - 1 }, this.ver);
+    }
+  };
+
+  ver = () => {
+    const { quantity } = this.state;
+    console.log(quantity);
+  };
+
   render() {
-    const { product } = this.state;
+    const { product, quantity } = this.state;
     const { addToCart } = this.props;
 
     return (
@@ -45,6 +67,15 @@ export default class ProductDetails extends Component {
                     src={ product.thumbnail }
                     alt={ product.title }
                   />
+                  { product.shipping.free_shipping
+                    && (
+                      <img
+                        data-testid="free-shipping"
+                        src="/assets/images/entrega-gratis.png"
+                        alt="frete gratis"
+                        width="25px"
+                      />
+                    ) }
                 </section>
 
                 <section>
@@ -52,16 +83,28 @@ export default class ProductDetails extends Component {
                     Especificações técnicas
                   </h3>
                   <div>
-                    <button>-</button>
-                    <span>1</span>
-                    <button>+</button>
+                    <button
+                      type="button"
+                      data-testid="product-decrease-quantity"
+                      onClick={ this.subQuantity }
+                    >
+                      -
+                    </button>
+                    <span>{ quantity }</span>
+                    <button
+                      type="button"
+                      data-testid="product-increase-quantity"
+                      onClick={ this.addQuantity }
+                    >
+                      +
+                    </button>
                   </div>
                   <h3 data-testid="product-detail-price">
                     {`R$ ${product.price}`}
                   </h3>
                   <button
                     type="button"
-                    onClick={ () => addToCart(product) }
+                    onClick={ () => addToCart(product, quantity) }
                     data-testid="product-detail-add-to-cart"
                   >
                     Adicionar ao carrinho
